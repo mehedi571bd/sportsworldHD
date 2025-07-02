@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sports World - Live Streaming</title>
+
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, #ff0000 0%, #00cc00 100%);
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ব্যাকগ্রাউন্ডে বড় হালকা লেখা */
+    .background-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.07);
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    header {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 12px #00000088;
+      position: relative;
+      z-index: 10;
+    }
+    nav {
+      background: rgba(0,0,0,0.7);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 10;
+    }
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+    nav a.small {
+      font-size: 1rem;
+    }
+    nav a.large {
+      font-size: 1.5rem;
+    }
+    nav a:hover, nav a.active {
+      background: #fff;
+      color: #000;
+    }
+    .container {
+      max-width: 1100px;
+      width: 100%;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex-grow: 1;
+      background: rgba(0,0,0,0.5);
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00000088;
+      position: relative;
+      z-index: 10;
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    h2 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-size: 2rem;
+      text-align: center;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .video-js {
+      width: 100% !important;
+      max-width: 900px;
+      height: 480px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px #00000088;
+      margin: 0 auto 40px auto;
+    }
+    .contact-list {
+      line-height: 2.8;
+      margin-left: 20px;
+      padding-left: 0;
+      list-style: none;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .contact-list li {
+      margin-bottom: 12px;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+      color: #eee;
+      background-color: rgba(0,0,0,0.6);
+      border-top: 1px solid #222;
+      margin-top: auto;
+      box-shadow: 0 -2px 10px #00000088;
+      position: relative;
+      z-index: 10;
+    }
+    @media (max-width: 768px) {
+      .video-js {
+        height: 280px !important;
+      }
+      nav {
+        gap: 15px;
+      }
+      nav a.small {
+        font-size: 0.9rem;
+      }
+      nav a.large {
+        font-size: 1.2rem;
+      }
+      nav a {
+        padding: 8px 15px;
+      }
+      .background-text {
+        font-size: 6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- এখানে ব্যাকগ্রাউন্ডে বড় হালকা লেখা -->
+  <div class="background-text">SPORTS WORLD</div>
+
+  <header>Sports World</header>
+
+  <nav>
+    <a href="#" class="nav-link small active" data-target="live-cricket">Live Cricket</a>
+    <a href="#" class="nav-link small" data-target="live-football">Live Football</a>
+    <a href="#" class="nav-link large" data-target="highlights">Highlights</a>
+    <a href="#" class="nav-link large" data-target="schedule">Schedule</a>
+    <a href="#" class="nav-link large" data-target="contact">Contact</a>
+  </nav>
+
+  <div class="container">
+
+    <section id="live-cricket" class="active">
+      <h2>Live Cricket Matches</h2>
+      <video
+        id="cricket-player"
+        class="video-js vjs-default-skin"
+        controls
+        autoplay
+        muted
+        preload="auto"
+        playsinline
+      ></video>
+    </section>
+
+    <section id="live-football">
+      <h2>Live Football Matches</h2>
+      <video
+        id="football-player"
+        class="video-js vjs-default-skin"
+        controls
+        autoplay
+        muted
+        preload="auto"
+        playsinline
+      ></video>
+    </section>
+
+    <section id="highlights">
+      <h2>Match Highlights</h2>
+
+      <!-- YouTube ভিডিও এম্বেড -->
+      <div style="max-width: 900px; margin: 0 auto 30px auto;">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/abc123xyz" 
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div style="max-width: 900px; margin: 0 auto 30px auto;">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/def456uvw" 
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+
+      <ul>
+        <li>India vs Pakistan 2025 - Best Moments</li>
+        <li>FIFA World Cup 2022 - Top Goals</li>
+        <li>IPL 2024 - Best Sixes Compilation</li>
+        <li>UEFA Champions League - Incredible Saves</li>
+      </ul>
+    </section>
+
+    <section id="schedule">
+      <h2>Upcoming Sports Schedule</h2>
+      <ul>
+        <li>Asia Cup Cricket - July 2025</li>
+        <li>Olympics 2025 - Opening Ceremony</li>
+        <li>FIFA World Cup 2026 - Group Stage</li>
+        <li>NBA Finals 2025</li>
+        <li>Wimbledon Tennis 2025</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <ul class="contact-list">
+        <li>Email: support@sportsworld.com</li>
+        <li>Phone: +880 1234 567890</li>
+        <li>Facebook: facebook.com/sportsworld</li>
+        <li>Twitter: twitter.com/sportsworld</li>
+        <li>Instagram: instagram.com/sportsworld</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer>&copy; 2025 Sports World. All rights reserved.</footer>
+
+  <!-- Video.js library -->
+  <script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
+  <!-- hls.js for HLS streaming support -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <script>
+    const links = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        sections.forEach(sec => {
+          if (sec.id === link.dataset.target) {
+            sec.classList.add('active');
+            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            sec.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // লাইভ স্ট্রিম URL গুলো নিজের মতো বসাও
+    const cricketStreamUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+    const footballStreamUrl = 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8';
+
+    function setupHlsPlayer(videoElementId, streamUrl) {
+      const video = document.getElementById(videoElementId);
+
+      if(Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(streamUrl);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = streamUrl;
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      } else {
+        alert('Your browser does not support HLS streaming.');
+      }
+    }
+
+    setupHlsPlayer('cricket-player', cricketStreamUrl);
+    setupHlsPlayer('football-player', footballStreamUrl);
+  </script>
+
+</body>
+</html>
